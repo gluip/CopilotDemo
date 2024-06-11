@@ -2,6 +2,8 @@ import { isPalinDrome, isPrimeNumber,areAnagram,countWords,reverseString } from 
 
 test('isPalinDrome returns true for palindrome', () => {
   expect(isPalinDrome('madam')).toBe(true);  
+
+  
 });
 
 test('isPalinDrome returns false for non-palindrome', () => {

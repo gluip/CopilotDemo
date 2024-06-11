@@ -7,6 +7,7 @@
     <style>
       body {
         font-family: Arial, sans-serif;
+        padding: 50px;
       }
       .puzzle-container {
         display: inline-block;
@@ -54,19 +55,24 @@
       .puzzle-cell.grey input {
         background-color: lightgray;
       }
+      
+  
+        
+      
     </style>
   </head>
-  <body>
+  <body class="confetti">
+    <h1>Vul hier je antwoorden in.</h1>
     <div class="puzzle-container">
       <div class="puzzle-row">
         <div class="puzzle-cell black"></div>
         <div class="puzzle-cell black"><span class="clue-number">1</span></div>
         <div class="puzzle-cell black"></div>
         <div class="puzzle-cell">
-          <span class="clue-number">1</span><input type="text" maxlength="1" />
+          <span class="clue-number">1</span><input type="text" maxlength="1"  />
         </div>
-        <div class="puzzle-cell"><input type="text" maxlength="1" /></div>
-        <div class="puzzle-cell grey"><input type="text" maxlength="1" /></div>
+        <div class="puzzle-cell"><input type="text" maxlength="1"/></div>
+        <div class="puzzle-cell grey"><input type="text" maxlength="1"/></div>
         <div class="puzzle-cell"><input type="text" maxlength="1" /></div>
         <div class="puzzle-cell"><input type="text" maxlength="1" /></div>
         <div class="puzzle-cell black"></div>
@@ -130,22 +136,37 @@
       </div>
     </div>
 
-    <div class="clues">
-      <h3>Clues</h3>
-      <ul>
-        <li>negen</li>
-        <li>tien</li>
-        <li>return</li>
-        <li>acht</li>
-        <li>experience</li>
-      </ul>
-    </div>
+    
     
   </body>
+  <script src="./confetti.js" type="text/javascript"></script>
   <script>
+    // look through all input elements and add eventhandler to focus on the next input element
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            if (input.value.length === 1) {
+                const nextIndex = index + 1;
+                if (nextIndex < inputs.length) {
+                    inputs[nextIndex].focus();
+                }
+            }
+        });
+    });
+
+
+
     // get grey elements and add event listener
-    const greyElements = document.querySelectorAll('.puzzle-cell.grey input');
+    
     const checkIsAnswered = () => {
+        // make sure all input elements have a value
+        const inputElements = document.querySelectorAll('input');
+        const allAnswered = Array.from(inputElements).every((element) => element.value.length === 1);
+
+        if (!allAnswered) {
+            return false;
+        }
+
         const greyElements = document.querySelectorAll('.puzzle-cell.grey input');
         
         const anwsers = Array.from(greyElements).map((element) => element.value);
@@ -154,16 +175,28 @@
         return anwsersString === "genai";
     }
 
-    
+    const inputElements = document.querySelectorAll('input');
 
-    greyElements.forEach((element) => {
+    inputElements.forEach((element) => {
       element.addEventListener('input', (e) => {
         if (checkIsAnswered()){
             // add a confette class to the body element
-            document.body.classList.add('confetti');
+            poof();
+            setTimeout(() => {
+              alert('Goed gedaan! Je hebt de puzzel opgelost! Je hebt een lollie verdient')
+            }, 5000);
             
         }
       });
     });
+
+    function focusNext(currentInput, nextIndex) {
+        if (currentInput.value.length === 1) {
+        const nodes = document.querySelectorAll(`input`);
+            if (nextIndex < nodes.length)
+            nodes[nextIndex].focus();
+        }
+    }
   </script>
+  
 </html>
