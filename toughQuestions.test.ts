@@ -12,7 +12,7 @@ test('tel het aantal ts in het onderstaande woord', ()=>{
     
 });
 
-// vraag 3: wat klopt er niet aan deze functie
+// vraag 3: welk woord mist er in deze functie
 function multiply(a: number, b: number): number {
     a * b;
 }
